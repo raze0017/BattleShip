@@ -11,6 +11,7 @@ player2.gameBoard.placeShip(3, [
 ]);
 
 console.log(player2.gameBoard.board);
+
 player1.attack(player2.gameBoard, 0, 0);
 player1.attack(player2.gameBoard, 0, 1);
 player1.attack(player2.gameBoard, 0, 2);
