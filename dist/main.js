@@ -16,7 +16,7 @@
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./css/styles.css */ \"./src/css/styles.css\");\n/* harmony import */ var _css_addtional_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./css/addtional.css */ \"./src/css/addtional.css\");\n/* harmony import */ var _css_iconstyles_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/iconstyles.css */ \"./src/css/iconstyles.css\");\n/* harmony import */ var _scripts_gameboard_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./scripts/gameboard.mjs */ \"./src/scripts/gameboard.mjs\");\n\n\n\n\nvar myGameBoard = new _scripts_gameboard_mjs__WEBPACK_IMPORTED_MODULE_3__[\"default\"]();\nmyGameBoard.placeShip(3, [[0, 0], [0, 1], [0, 2]]);\nconsole.log(myGameBoard.board);\nmyGameBoard.receiveAttack(0, 0);\nmyGameBoard.receiveAttack(0, 1);\nmyGameBoard.receiveAttack(0, 2);\nconsole.log('hello');\nconsole.log('hello' + myGameBoard.allShipsSunk()); // Should be true after 3 hits\n\n//# sourceURL=webpack://weatherapp/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _css_styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./css/styles.css */ \"./src/css/styles.css\");\n/* harmony import */ var _css_addtional_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./css/addtional.css */ \"./src/css/addtional.css\");\n/* harmony import */ var _css_iconstyles_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./css/iconstyles.css */ \"./src/css/iconstyles.css\");\n/* harmony import */ var _scripts_player_mjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./scripts/player.mjs */ \"./src/scripts/player.mjs\");\n\n\n\n\nvar player1 = (0,_scripts_player_mjs__WEBPACK_IMPORTED_MODULE_3__[\"default\"])('Human');\nvar player2 = (0,_scripts_player_mjs__WEBPACK_IMPORTED_MODULE_3__[\"default\"])('Computer');\nplayer2.gameBoard.placeShip(3, [[0, 0], [0, 1], [0, 2]]);\nconsole.log(player2.gameBoard.board);\nplayer1.attack(player2.gameBoard, 0, 0);\nplayer1.attack(player2.gameBoard, 0, 1);\nplayer1.attack(player2.gameBoard, 0, 2);\nconsole.log('hello');\nconsole.log(player2.gameBoard.allShipsSunk()); // Should be true after 3 hits\n\n//# sourceURL=webpack://weatherapp/./src/index.js?");
 
 /***/ }),
 
@@ -167,6 +167,16 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ GameBoard)\n/* harmony export */ });\n/* harmony import */ var _ship_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ship.mjs */ \"./src/scripts/ship.mjs\");\n // Import the Ship class\r\n\r\nclass GameBoard {\r\n  constructor() {\r\n    this.board = Array(10)\r\n      .fill(null)\r\n      .map(() => Array(10).fill(null)); // Create a 10x10 board\r\n    this.missedAttacks = [];\r\n    this.ships = [];\r\n  }\r\n\r\n  placeShip(length, coordinates) {\r\n    const newShip = new _ship_mjs__WEBPACK_IMPORTED_MODULE_0__[\"default\"](length);\r\n    for (const coord of coordinates) {\r\n      const [x, y] = coord;\r\n      this.board[x][y] = newShip;\r\n    }\r\n    this.ships.push(newShip);\r\n  }\r\n\r\n  receiveAttack(x, y) {\r\n    const target = this.board[x][y];\r\n    if (target) {\r\n      target.hit();\r\n    } else {\r\n      this.missedAttacks.push([x, y]);\r\n    }\r\n  }\r\n\r\n  allShipsSunk() {\r\n    return this.ships.every((ship) => ship.isSunk());\r\n  }\r\n}\r\n\n\n//# sourceURL=webpack://weatherapp/./src/scripts/gameboard.mjs?");
+
+/***/ }),
+
+/***/ "./src/scripts/player.mjs":
+/*!********************************!*\
+  !*** ./src/scripts/player.mjs ***!
+  \********************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ createPlayer)\n/* harmony export */ });\n/* harmony import */ var _gameboard_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gameboard.mjs */ \"./src/scripts/gameboard.mjs\");\n\r\nfunction createPlayer(type) {\r\n  const gameBoard = new _gameboard_mjs__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\r\n  function attack(opponentGameBoard, x, y) {\r\n    opponentGameBoard.receiveAttack(x, y);\r\n  }\r\n  return {\r\n    type,\r\n    gameBoard,\r\n    attack,\r\n  };\r\n}\r\n\n\n//# sourceURL=webpack://weatherapp/./src/scripts/player.mjs?");
 
 /***/ }),
 
