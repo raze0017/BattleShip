@@ -1,16 +1,13 @@
 // gameboard.mjs
 
 import Ship from './ship.mjs'; // Import the Ship class
-
+import createGrid from './ui.mjs';
 export default class GameBoard {
   constructor() {
-    this.board = Array(10)
-      .fill(null)
-      .map(() => Array(10).fill(null)); // Create a 10x10 board
+    this.board = Array.from({ length: 10 }, () => Array(10).fill(null));
     this.missedAttacks = [];
     this.ships = [];
   }
-
   placeShip(length, coordinates) {
     const newShip = new Ship(length);
     for (const coord of coordinates) {
