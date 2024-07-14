@@ -6,15 +6,23 @@ export function createGrid(boardElement) {
       gridCell.classList.add('gridcell');
       gridCell.dataset.x = i;
       gridCell.dataset.y = j;
+      gridCell.classList.add(`cell-${i}-${j}`);
       boardElement.appendChild(gridCell);
     }
   }
 }
 export function addCellListeners(boardElement, gameBoard) {
   boardElement.addEventListener('click', (event) => {
-    const cell = event.target;
-    const x = parseInt(cell.dataset.x);
-    const y = parseInt(cell.dataset.y);
-    gameBoard.receiveAttack(x, y);
+    const cell = event.target.closest('.gridcell');
+    if (!cell) return; // Exit if no grid cell is clicked
+
+    const x = parseInt(cell.dataset.x, 10);
+    const y = parseInt(cell.dataset.y, 10);
+    console.log(x, y);
+    if (!isNaN(x) && !isNaN(y)) {
+      gameBoard.receiveAttack(x, y);
+    } else {
+      console.error('Invalid coordinates:', x, y);
+    }
   });
 }

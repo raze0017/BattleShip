@@ -4,15 +4,19 @@ import Ship from './ship.mjs'; // Import the Ship class
 import createGrid from './ui.mjs';
 export default class GameBoard {
   constructor() {
-    this.board = Array.from({ length: 10 }, () => Array(10).fill(null));
+    this.board = Array.from({ length: 8 }, () => Array(8).fill(null));
     this.missedAttacks = [];
     this.ships = [];
   }
-  placeShip(length, coordinates) {
+  placeShip(length, coordinates, boardElement, enemy) {
     const newShip = new Ship(length);
     for (const coord of coordinates) {
       const [x, y] = coord;
       this.board[x][y] = newShip; // Place the ship on the board
+      const toColor = boardElement.querySelector(`.cell-${x}-${y}`);
+      if (!enemy) {
+        toColor.style.background = 'blue';
+      }
     }
     this.ships.push(newShip); // Keep track of all ships
   }
