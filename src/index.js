@@ -3,6 +3,7 @@ import './css/addtional.css';
 import './css/iconstyles.css';
 import createPlayer from './scripts/player.mjs';
 import { createGrid, addCellListeners } from './scripts/ui.mjs';
+
 document.addEventListener('DOMContentLoaded', function () {
   const player1BoardElement = document.querySelector('.player1');
   const player2BoardElement = document.querySelector('.player2');
@@ -10,10 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const player2 = createPlayer('computer');
 
   createGrid(player1BoardElement);
-  addCellListeners(player1BoardElement, player1.gameBoard);
-
   createGrid(player2BoardElement);
-  addCellListeners(player2BoardElement, player2.gameBoard);
+  addCellListeners(player2BoardElement, player1, player2); // Attach listeners to player 2's board only
 
   // Example ship placement
   player1.gameBoard.placeShip(
@@ -24,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
       [0, 2],
     ],
     player1BoardElement,
-    0
+    false
   );
   player2.gameBoard.placeShip(
     3,
@@ -34,10 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
       [1, 2],
     ],
     player2BoardElement,
-    1
+    true
   );
 
+  window.currentPlayer = 'player1'; // Define currentPlayer globally
   console.log('Game initialized');
-
-  console.log(player2.gameBoard.allShipsSunk()); // Should be true after 3 hits
 });

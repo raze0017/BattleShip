@@ -1,20 +1,20 @@
-// gameboard.mjs
-
 import Ship from './ship.mjs'; // Import the Ship class
-import createGrid from './ui.mjs';
+
 export default class GameBoard {
   constructor() {
     this.board = Array.from({ length: 8 }, () => Array(8).fill(null));
     this.missedAttacks = [];
     this.ships = [];
   }
+
   placeShip(length, coordinates, boardElement, enemy) {
     const newShip = new Ship(length);
+    console.log('Place ship on board:', boardElement); // Debugging log
     for (const coord of coordinates) {
       const [x, y] = coord;
       this.board[x][y] = newShip; // Place the ship on the board
       const toColor = boardElement.querySelector(`.cell-${x}-${y}`);
-      if (!enemy) {
+      if (toColor && !enemy) {
         toColor.style.background = 'blue';
       }
     }
@@ -23,15 +23,19 @@ export default class GameBoard {
 
   receiveAttack(x, y, boardElement) {
     const target = this.board[x][y];
+    console.log('Receive attack on board:', boardElement); // Debugging log
     const toColor = boardElement.querySelector(`.cell-${x}-${y}`);
 
-    if (target) {
-      toColor.style.background = 'red';
-      target.hit(); // Increment hits if a ship is hit
+    if (toColor) {
+      if (target) {
+        toColor.style.background = 'red';
+        target.hit(); // Increment hits if a ship is hit
+      } else {
+        toColor.style.background = 'black';
+        this.missedAttacks.push([x, y]); // Track missed attacks
+      }
     } else {
-      toColor.style.background = 'black';
-
-      this.missedAttacks.push([x, y]); // Track missed attacks
+      console.error('Error: Cell element not found', x, y);
     }
   }
 
