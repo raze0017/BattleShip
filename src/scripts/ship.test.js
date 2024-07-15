@@ -4,6 +4,7 @@ test('creates a ship', () => {
   const newShip = new Ship(3);
   expect(newShip.length).toBe(3);
 });
+
 test('sinks', () => {
   const newShip = new Ship(3);
   newShip.hit();

@@ -21,11 +21,16 @@ export default class GameBoard {
     this.ships.push(newShip); // Keep track of all ships
   }
 
-  receiveAttack(x, y) {
+  receiveAttack(x, y, boardElement) {
     const target = this.board[x][y];
+    const toColor = boardElement.querySelector(`.cell-${x}-${y}`);
+
     if (target) {
+      toColor.style.background = 'red';
       target.hit(); // Increment hits if a ship is hit
     } else {
+      toColor.style.background = 'black';
+
       this.missedAttacks.push([x, y]); // Track missed attacks
     }
   }

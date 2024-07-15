@@ -20,7 +20,7 @@ export function addCellListeners(boardElement, gameBoard) {
     const y = parseInt(cell.dataset.y, 10);
     console.log(x, y);
     if (!isNaN(x) && !isNaN(y)) {
-      gameBoard.receiveAttack(x, y);
+      gameBoard.receiveAttack(x, y, boardElement);
     } else {
       console.error('Invalid coordinates:', x, y);
     }
