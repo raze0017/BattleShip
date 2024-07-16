@@ -75,6 +75,10 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   }
+  const but = document.querySelector('.but');
+  but.addEventListener('click', () => {
+    location.reload();
+  });
   window.currentPlayer = 'player1'; // Define currentPlayer globally
   console.log('Game initialized');
 });

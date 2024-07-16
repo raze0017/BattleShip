@@ -40,12 +40,12 @@ header {
 @media (max-width: 500px) {
   .gameBoards {
     flex-direction: column; /* Stacks gameboards vertically */
-    align-items: center; /* Centers gameboards */
+    justify-content: space-between;
   }
-
+  .player1 {
+    margin-bottom: 45px;
+  }
   .gameBoard {
-    width: 100%; /* Full width on small screens */
-    height: auto; /* Auto height to maintain aspect ratio */
   }
 }
 .con {
