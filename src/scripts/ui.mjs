@@ -62,5 +62,5 @@ function computerTurn(player1, playerGameBoard, playerBoardElement) {
     } else {
       window.currentPlayer = 'player1';
     }
-  }, 1000);
+  }, 500);
 }

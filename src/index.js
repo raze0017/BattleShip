@@ -15,27 +15,66 @@ document.addEventListener('DOMContentLoaded', function () {
   addCellListeners(player2BoardElement, player1, player2); // Attach listeners to player 2's board only
 
   // Example ship placement
-  player1.gameBoard.placeShip(
-    3,
-    [
-      [0, 0],
-      [0, 1],
-      [0, 2],
-    ],
-    player1BoardElement,
-    false
-  );
-  player2.gameBoard.placeShip(
-    3,
-    [
-      [1, 0],
-      [1, 1],
-      [1, 2],
-    ],
-    player2BoardElement,
-    true
-  );
+  const shipSizes = [5, 4, 3, 3, 2]; // Example ship sizes
+  let HashSet = new Set();
 
+  for (let size of shipSizes) {
+    let validPlacement = false;
+    while (!validPlacement) {
+      let x = Math.floor(Math.random() * 8);
+      let y = Math.floor(Math.random() * 8);
+      let horizontal = Math.random() < 0.5; // 50% chance for horizontal
+      let temp = [];
+      validPlacement = true;
+
+      for (let i = 0; i < size; i++) {
+        let newX = horizontal ? x : x + i;
+        let newY = horizontal ? y + i : y;
+
+        if (newX >= 8 || newY >= 8 || HashSet.has(`${newX},${newY}`)) {
+          validPlacement = false;
+          break;
+        }
+        temp.push([newX, newY]);
+      }
+
+      if (validPlacement) {
+        for (let coord of temp) {
+          HashSet.add(`${coord[0]},${coord[1]}`);
+        }
+        player1.gameBoard.placeShip(size, temp, player1BoardElement, false);
+      }
+    }
+  }
+  let HashSet2 = new Set();
+  for (let size of shipSizes) {
+    let validPlacement = false;
+    while (!validPlacement) {
+      let x = Math.floor(Math.random() * 8);
+      let y = Math.floor(Math.random() * 8);
+      let horizontal = Math.random() < 0.5; // 50% chance for horizontal
+      let temp = [];
+      validPlacement = true;
+
+      for (let i = 0; i < size; i++) {
+        let newX = horizontal ? x : x + i;
+        let newY = horizontal ? y + i : y;
+
+        if (newX >= 8 || newY >= 8 || HashSet2.has(`${newX},${newY}`)) {
+          validPlacement = false;
+          break;
+        }
+        temp.push([newX, newY]);
+      }
+
+      if (validPlacement) {
+        for (let coord of temp) {
+          HashSet2.add(`${coord[0]},${coord[1]}`);
+        }
+        player2.gameBoard.placeShip(size, temp, player2BoardElement, true);
+      }
+    }
+  }
   window.currentPlayer = 'player1'; // Define currentPlayer globally
   console.log('Game initialized');
 });
