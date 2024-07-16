@@ -30,6 +30,7 @@ export default class GameBoard {
       if (target) {
         toColor.style.background = 'red';
         target.hit(); // Increment hits if a ship is hit
+        return true;
       } else {
         toColor.style.background = 'black';
         this.missedAttacks.push([x, y]); // Track missed attacks
