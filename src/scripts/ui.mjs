@@ -42,6 +42,12 @@ export function addCellListeners(boardElement, player1, player2) {
         player1.gameBoard,
         document.querySelector('.player1')
       );
+      if (player1.gameBoard.allShipsSunk()) {
+        console.log('End game: Computer wins');
+        const con = document.querySelector('.con');
+        con.innerHTML = `Computer Wins`;
+        window.currentPlayer = null; // Stop the game
+      }
     }
   });
 }
@@ -63,11 +69,21 @@ const randomCoordinates = () => {
 
 function computerTurn(player1, playerGameBoard, playerBoardElement) {
   setTimeout(() => {
+    if (playerGameBoard.allShipsSunk()) {
+      console.log('End game: Computer wins');
+      const con = document.querySelector('.con');
+      con.innerHTML = `Computer Wins`;
+      window.currentPlayer = null; // Stop the game
+    }
     let x, y, newx, newy;
-    if (!status || stack.length === 0) {
+    if (!status && stack.length === 0) {
       [x, y] = randomCoordinates();
     } else {
-      [x, y] = stack.pop();
+      if (stack.length != 0) {
+        [x, y] = stack.pop();
+      } else {
+        status = 0;
+      }
     }
 
     status = playerGameBoard.receiveAttack(x, y, playerBoardElement);
