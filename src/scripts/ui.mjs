@@ -49,6 +49,12 @@ export function addCellListeners(boardElement, player1, player2) {
         window.currentPlayer = null; // Stop the game
       }
     }
+    if (player1.gameBoard.allShipsSunk()) {
+      console.log('End game: Computer wins');
+      const con = document.querySelector('.con');
+      con.innerHTML = `Computer Wins`;
+      window.currentPlayer = null; // Stop the game
+    }
   });
 }
 
@@ -83,11 +89,17 @@ function computerTurn(player1, playerGameBoard, playerBoardElement) {
         [x, y] = stack.pop();
       } else {
         status = 0;
+        [x, y] = randomCoordinates();
       }
     }
-
-    status = playerGameBoard.receiveAttack(x, y, playerBoardElement);
-    attackedCoordinates.add(`${x},${y}`);
+    if ([x, y]) {
+      status = playerGameBoard.receiveAttack(x, y, playerBoardElement);
+      attackedCoordinates.add(`${x},${y}`);
+    } else {
+      [x, y] = randomCoordinates();
+      status = playerGameBoard.receiveAttack(x, y, playerBoardElement);
+      attackedCoordinates.add(`${x},${y}`);
+    }
 
     if (status) {
       const directions = [

@@ -22,8 +22,9 @@ export default class GameBoard {
   }
 
   receiveAttack(x, y, boardElement) {
+    console.log('Receive attack on board:', boardElement, x, y); // Debugging log
     const target = this.board[x][y];
-    console.log('Receive attack on board:', boardElement); // Debugging log
+
     const toColor = boardElement.querySelector(`.cell-${x}-${y}`);
 
     if (toColor) {
